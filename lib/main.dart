@@ -60,7 +60,6 @@ class _FirstPageState extends State<FirstPage> {
       ),// This trailing comma makes auto-formatting nicer for build methods.
     );
   }
-
   void _onItemTapped(int index) => setState(() => _selectedIndex = index);
 }
 
@@ -90,6 +89,9 @@ class _HomePageState extends State<HomePage> {
                       padding: const EdgeInsets.all(8.0),
                       child: ListView(
                         children: documents.map((document) {
+                          String name = document['name'];
+                          String money = document['money'];
+                          String cycle = document['cycle'];
                           IconButton editIcon;
                           editIcon = IconButton(
                             icon: Icon(Icons.edit),
@@ -100,20 +102,19 @@ class _HomePageState extends State<HomePage> {
                               );
                             },
                           );
-                          String money = document['money'];
                           return Card(
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: ListTile(
                                 leading: Text(
-                                  document['name'],
+                                  name,
                                   style: TextStyle(
                                     fontSize: 22,
                                     fontWeight: FontWeight.bold,
                                   ),
                                 ),
                                 title: Text(
-                                  "${'¥'}$money${'/毎月'}",
+                                  "${'¥'}$money${cycle == '月に１度' ? '/毎月' : '/毎年'}",
                                   style: TextStyle(fontSize: 18),
                                 ),
                                 trailing: editIcon,
