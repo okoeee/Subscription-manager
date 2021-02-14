@@ -9,8 +9,9 @@ class AddPostPage extends StatefulWidget {
 class _AddPostPageState extends State<AddPostPage> {
   String name = '';
   String money = '';
+  String monthMoney = '';
+  String yearMoney = '';
   String cycle = '月に１度';
-
   String _selectedValue = '月に１度';
   final _formKey = GlobalKey<FormState>();
 
@@ -66,13 +67,13 @@ class _AddPostPageState extends State<AddPostPage> {
                   padding: EdgeInsets.all(8),
                 ),
                 DropdownButtonFormField(
+                  value: _selectedValue,
                   decoration: InputDecoration(labelText: '支払い周期'),
                   isExpanded: true,
                   items: ['月に１度', '年に１度'].map((label) => DropdownMenuItem(
                         child: Text(label),
                         value: label,
                       )).toList(),
-                  value: _selectedValue,
                   onChanged: (String value) {
                     setState(() {
                       cycle = value;
@@ -103,6 +104,8 @@ class _AddPostPageState extends State<AddPostPage> {
                           'name': name,
                           'money': money,
                           'cycle': cycle,
+                          'month_money': cycle == '月に１度' ? money : ((int.parse(money)/12).round()).toString(),
+                          'year_money': cycle == '年に１度' ? money : ((int.parse(money)*12).round()).toString(),
                         });
                         Navigator.pop(context);
                       }
